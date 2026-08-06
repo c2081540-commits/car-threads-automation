@@ -1,0 +1,24 @@
+name: Validate car content
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "app/**"
+      - "data/content_queue.json"
+      - "generated/**"
+      - "tests/**"
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python -m app.cli validate
+
