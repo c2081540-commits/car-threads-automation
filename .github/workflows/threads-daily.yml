@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "0 22 * * *"
     - cron: "0 3 * * *"
-    - cron: "0 11 * * *"
+    - cron: "0 9 * * *"
   workflow_dispatch:
     inputs:
       operation:
@@ -86,4 +86,3 @@ jobs:
             git commit -m "data: record Threads post"
             git push
           fi
-
