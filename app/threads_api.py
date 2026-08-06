@@ -38,14 +38,29 @@ class ThreadsAPI:
             if status == "FINISHED":
                 return
             if status in {"ERROR", "EXPIRED"}:
-                raise RuntimeError(f"Threads image container failed: {result}")
+                raise RuntimeError(f"Threads media container failed: {result}")
             if attempt < attempts - 1:
                 time.sleep(interval)
-        raise RuntimeError("Threads image container was not ready")
+        raise RuntimeError("Threads media container was not ready")
 
-    def _publish_container(self, creation_id):
-        result = self._post(f"{self.user_id}/threads_publish", {"access_token": self.token, "creation_id": creation_id})
-        return result["id"]
+    def _publish_container(self, creation_id, attempts=5, interval=3):
+        import time
+
+        last_error = None
+        for attempt in range(attempts):
+            try:
+                result = self._post(
+                    f"{self.user_id}/threads_publish",
+                    {"access_token": self.token, "creation_id": creation_id},
+                )
+                return result["id"]
+            except RuntimeError as exc:
+                last_error = exc
+                if "media not found" not in str(exc).lower():
+                    raise
+                if attempt < attempts - 1:
+                    time.sleep(interval)
+        raise RuntimeError(f"Threads container publish failed after retry: {last_error}")
 
     def publish_text(self, text, reply_to_id=None, topic_tag=None):
         payload = {"access_token": self.token, "media_type": "TEXT", "text": text}
@@ -54,6 +69,7 @@ class ThreadsAPI:
         if topic_tag:
             payload["topic_tag"] = topic_tag
         container = self._post(f"{self.user_id}/threads", payload)
+        self._wait_until_ready(container["id"])
         return self._publish_container(container["id"])
 
     def publish_image(self, text, image_url, reply_to_id=None, topic_tag=None):
@@ -80,4 +96,3 @@ class ThreadsAPI:
             if attempt < attempts - 1:
                 time.sleep(interval)
         raise RuntimeError(f"Threads公開確認に失敗しました: {last}")
-
