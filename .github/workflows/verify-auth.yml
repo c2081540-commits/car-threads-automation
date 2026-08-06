@@ -23,3 +23,4 @@ jobs:
         run: |
           python -m app.cli verify-auth > /dev/null
           echo "Car Threads credentials verified."
+# Re-run after THREADS_USER_ID update (2026-08-06)
