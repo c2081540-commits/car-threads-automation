@@ -1,0 +1,25 @@
+name: Verify car Threads credentials
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/verify-auth.yml"
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Verify credentials and account match
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          python -m app.cli verify-auth > /dev/null
+          echo "Car Threads credentials verified."
