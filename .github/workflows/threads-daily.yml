@@ -1,0 +1,89 @@
+name: Car Threads scheduled dispatch
+on:
+  schedule:
+    - cron: "0 22 * * *"
+    - cron: "0 3 * * *"
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      operation:
+        required: true
+        default: preview
+        type: choice
+        options: [preview, verify, dispatch]
+      slot:
+        required: true
+        default: evening
+        type: choice
+        options: [morning, noon, evening]
+      target_date:
+        required: false
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: car-threads-dispatch
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python -m app.cli validate
+      - name: Resolve route
+        id: route
+        env:
+          EVENT: ${{ github.event_name }}
+          CRON: ${{ github.event.schedule }}
+          INPUT_OPERATION: ${{ inputs.operation }}
+          INPUT_SLOT: ${{ inputs.slot }}
+          INPUT_DATE: ${{ inputs.target_date }}
+        run: |
+          if [ "$EVENT" = "schedule" ]; then
+            operation=dispatch
+            case "$CRON" in
+              "0 22 * * *") slot=morning ;;
+              "0 3 * * *") slot=noon ;;
+              *) slot=evening ;;
+            esac
+            target_date=$(TZ=Asia/Tokyo date +%F)
+          else
+            operation="$INPUT_OPERATION"; slot="$INPUT_SLOT"; target_date="${INPUT_DATE:-$(TZ=Asia/Tokyo date +%F)}"
+          fi
+          echo "operation=$operation" >> "$GITHUB_OUTPUT"
+          echo "slot=$slot" >> "$GITHUB_OUTPUT"
+          echo "target_date=$target_date" >> "$GITHUB_OUTPUT"
+      - name: Verify account
+        if: steps.route.outputs.operation == 'verify'
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python -m app.cli verify-auth
+      - name: Preview
+        if: steps.route.outputs.operation == 'preview'
+        run: python -m app.cli dispatch "${{ steps.route.outputs.slot }}" --date "${{ steps.route.outputs.target_date }}"
+      - name: Dispatch
+        if: steps.route.outputs.operation == 'dispatch'
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH || 'false' }}
+          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}
+        run: python -m app.cli dispatch "${{ steps.route.outputs.slot }}" --date "${{ steps.route.outputs.target_date }}"
+      - name: Save publish record
+        if: steps.route.outputs.operation == 'dispatch'
+        run: |
+          git config user.name "car-threads-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/published.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: record Threads post"
+            git push
+          fi
+
