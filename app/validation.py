@@ -8,6 +8,7 @@ from PIL import Image
 
 SLOTS = {"morning": "0700", "noon": "1200", "evening": "2000"}
 FORMATS = {"text", "image", "question", "comparison", "warning", "traffic"}
+IMAGE_SIZE = (1200, 675)
 
 
 def load_queue(path="data/content_queue.json"):
@@ -47,9 +48,8 @@ def validate_queue(path="data/content_queue.json", require_images=True):
             if require_images and not p.is_file(): errors.append(f"{label}: 画像が存在しません")
             elif require_images:
                 with Image.open(p) as image:
-                    if image.size != (1080, 1350): errors.append(f"{label}: 画像サイズは1080x1350ではありません")
+                    if image.size != IMAGE_SIZE: errors.append(f"{label}: 画像サイズは1200x675ではありません")
     for name, values in (("key", keys), ("post_no", post_nos), ("日時枠", slots)):
         dup = [v for v, n in Counter(values).items() if n > 1]
         if dup: errors.append(f"{name}が重複しています: {dup}")
     return {"passed": not errors, "post_count": len(queue), "errors": errors}
-
