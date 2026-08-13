@@ -56,15 +56,18 @@ def dispatch(slot, target_date):
 def main():
     parser = argparse.ArgumentParser(); sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("validate"); sub.add_parser("verify-auth")
-    p = sub.add_parser("dispatch"); p.add_argument("slot", choices=("morning", "noon", "evening")); p.add_argument("--date", required=True)
+    p = sub.add_parser("dispatch"); p.add_argument("slot", choices=("morning", "noon", "evening")); p.add_argument("--date", required=True); p.add_argument("--require-content", action="store_true")
     args = parser.parse_args()
     if args.cmd == "validate":
         result = validate_queue(settings.content_queue_path)
         show(result)
         if not result["passed"]: raise SystemExit(1)
     elif args.cmd == "verify-auth": show(ThreadsAPI().verify_identity())
-    else: show(dispatch(args.slot, args.date))
+    else:
+        result = dispatch(args.slot, args.date)
+        show(result)
+        if args.require_content and result.get("status") == "no_content":
+            raise SystemExit(1)
 
 
 if __name__ == "__main__": main()
-
