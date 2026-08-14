@@ -1,0 +1,17 @@
+name: Schedule view check
+on:
+  pull_request:
+    paths:
+      - 'scripts/generate_schedule.py'
+      - 'tests/test_schedule.py'
+      - '.github/workflows/threads-daily.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest tests.test_schedule -v
+      - run: python scripts/generate_schedule.py
