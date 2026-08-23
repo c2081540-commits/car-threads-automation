@@ -43,7 +43,12 @@ def collect_insights(output_dir="data/insights", api=None, published_path=None):
 
     for key, record in published.items():
         media_id = str(record["media_id"])
-        media = api.get_media(media_id)
+        media_error = ""
+        try:
+            media = api.get_media(media_id)
+        except RuntimeError as exc:
+            media = {}
+            media_error = str(exc)
         metrics = {}
         errors = {}
         for metric in METRICS:
@@ -68,6 +73,7 @@ def collect_insights(output_dir="data/insights", api=None, published_path=None):
                 "title": next((line.strip() for line in text.splitlines() if line.strip()), ""),
                 "text": text,
                 "metrics": metrics,
+                "media_error": media_error,
                 "metric_errors": errors,
             }
         )
@@ -80,7 +86,7 @@ def collect_insights(output_dir="data/insights", api=None, published_path=None):
     output.mkdir(parents=True, exist_ok=True)
     (output / "latest.json").write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    fields = ["key", "post_no", "media_id", "permalink", "scheduled_at", "slot", "published_at", "media_type", "title", *METRICS]
+    fields = ["key", "post_no", "media_id", "permalink", "scheduled_at", "slot", "published_at", "media_type", "title", "media_error", *METRICS]
     with (output / "latest.csv").open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()

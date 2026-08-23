@@ -11,6 +11,10 @@ class FakeAPI:
     def get_media_insight(self, media_id, metric): return {"data": [{"name": metric, "values": [{"value": 12}]}]}
 
 
+class MissingMediaAPI(FakeAPI):
+    def get_media(self, media_id): raise RuntimeError("unsupported object")
+
+
 class InsightsTest(unittest.TestCase):
     def test_metric_value(self):
         self.assertEqual(_metric_value({"data": [{"name": "views", "values": [{"value": 9}]}]}, "views"), 9)
@@ -27,6 +31,16 @@ class InsightsTest(unittest.TestCase):
             self.assertEqual(result["posts"], 1)
             self.assertTrue((root / "out/latest.json").is_file())
             self.assertTrue((root / "out/latest.csv").is_file())
+
+    def test_collect_continues_when_media_metadata_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            published = root / "published.json"
+            published.write_text(json.dumps({"car-20260821-1200-044": {"post_no": "CAR-044", "media_id": "99", "permalink": "x"}}), encoding="utf-8")
+            collect_insights(root / "out", api=MissingMediaAPI(), published_path=published)
+            row = json.loads((root / "out/latest.json").read_text(encoding="utf-8"))["posts"][0]
+            self.assertEqual(row["permalink"], "x")
+            self.assertIn("unsupported object", row["media_error"])
 
 
 if __name__ == "__main__": unittest.main()
