@@ -6,6 +6,7 @@ from urllib.parse import quote
 from .settings import settings
 from .threads_api import ThreadsAPI
 from .validation import load_queue, validate_queue
+from .insights import collect_insights
 
 
 def show(value):
@@ -55,7 +56,7 @@ def dispatch(slot, target_date):
 
 def main():
     parser = argparse.ArgumentParser(); sub = parser.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("validate"); sub.add_parser("verify-auth")
+    sub.add_parser("validate"); sub.add_parser("verify-auth"); sub.add_parser("collect-insights")
     p = sub.add_parser("dispatch"); p.add_argument("slot", choices=("morning", "noon", "evening")); p.add_argument("--date", required=True); p.add_argument("--require-content", action="store_true")
     args = parser.parse_args()
     if args.cmd == "validate":
@@ -63,6 +64,7 @@ def main():
         show(result)
         if not result["passed"]: raise SystemExit(1)
     elif args.cmd == "verify-auth": show(ThreadsAPI().verify_identity())
+    elif args.cmd == "collect-insights": show(collect_insights())
     else:
         result = dispatch(args.slot, args.date)
         show(result)

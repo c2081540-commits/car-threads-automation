@@ -30,6 +30,21 @@ class ThreadsAPI:
             raise RuntimeError("THREADS_USER_IDとアクセストークンの利用者が一致しません")
         return {"id": str(result["id"]), "username": result.get("username", "")}
 
+    def get_media(self, media_id):
+        return self._get(
+            str(media_id),
+            {
+                "fields": "id,text,timestamp,media_type,permalink",
+                "access_token": self.token,
+            },
+        )
+
+    def get_media_insight(self, media_id, metric):
+        return self._get(
+            f"{media_id}/insights",
+            {"metric": metric, "access_token": self.token},
+        )
+
     def _wait_until_ready(self, creation_id, attempts=20, interval=3):
         import time
         for attempt in range(attempts):
