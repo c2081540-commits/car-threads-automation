@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-08-23T06:26:48+00:00",
+  "collected_at": "2026-08-23T06:33:31+00:00",
   "account": {
     "id": "26086093384422200",
     "username": "kuruma_honne"
@@ -310,14 +310,14 @@
         "quotes": null,
         "shares": null
       },
-      "media_error": "Threads API GET 18073248671395642 failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"THApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"A96RtWJaaqNCMiXNAEX1xbJ\"}}",
+      "media_error": "Threads API GET 18073248671395642 failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"THApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"AAUelU-B6pOJbGdn5hkzK_i\"}}",
       "metric_errors": {
-        "views": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"A8yKzq0fX0eggFk1GH430MN\"}}",
-        "likes": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"ACnxWmaFB2D-QolFjxVSZko\"}}",
-        "replies": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AiRmmIrUCdgSWvr3yg36Nce\"}}",
-        "reposts": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"Ap1t9_y7YyMmhqOseE_Y-ie\"}}",
-        "quotes": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AXyVD03h8JOC4V6_DhK4-VU\"}}",
-        "shares": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AU27ql22cCClBUFgvFtVFGi\"}}"
+        "views": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"A91EMjyakBoT-gzYm6lMVh5\"}}",
+        "likes": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"A-g8s-A6sqxw7TdybcPnWku\"}}",
+        "replies": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"APStccDHOhfg9FAUtiMCqrO\"}}",
+        "reposts": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AXGUKtRfuQT3M3u0dIlvuCV\"}}",
+        "quotes": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AHt98PUn69n6xshP515BuR-\"}}",
+        "shares": "Threads API GET 18073248671395642/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18073248671395642' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AgR_l4BjyGZL1uCnIqhTWEZ\"}}"
       }
     },
     {
@@ -559,14 +559,14 @@
         "quotes": null,
         "shares": null
       },
-      "media_error": "Threads API GET 18099567266256308 failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"THApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"A6aX8AqteDNreoL35PQxX2c\"}}",
+      "media_error": "Threads API GET 18099567266256308 failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"type\":\"THApiException\",\"code\":100,\"error_subcode\":33,\"fbtrace_id\":\"A-Hqmpe0WDiQhTz1SshniyQ\"}}",
       "metric_errors": {
-        "views": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"A941wLpl6kiEuow07kVP_ze\"}}",
-        "likes": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"Av1wLAwHKsFl8OnIZ3bMLba\"}}",
-        "replies": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AShc_9L5tCcEIrFEGtp4Hkm\"}}",
-        "reposts": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AjYI6m5MkVgLQKJYR5Ueo45\"}}",
-        "quotes": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"A3DFBaC_ld8GRxU63MyWwbl\"}}",
-        "shares": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"Az5MWh6o9ST0Zn69s2nSpaw\"}}"
+        "views": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AyxDrkph18NL7jvkmltEz5k\"}}",
+        "likes": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AFiLF9EDp9-yCqnh6M6m19M\"}}",
+        "replies": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AtHh0DJ_jW0MLJTFBhKI6Zn\"}}",
+        "reposts": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AIhWDXmgm0OdY8MVQqHPbfl\"}}",
+        "quotes": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"Amd9vkkGLwi9veiEXzk8wVk\"}}",
+        "shares": "Threads API GET 18099567266256308/insights failed: HTTP 400 body={\"error\":{\"message\":\"Unsupported get request. Object with ID '18099567266256308' does not exist, cannot be loaded due to missing permissions, or does not support this operation\",\"code\":100,\"type\":\"THApiException\",\"error_subcode\":33,\"fbtrace_id\":\"AN054prHR2Jg8z7erY2A-kJ\"}}"
       }
     },
     {
@@ -977,7 +977,7 @@
       "title": "買い物やレジャーの荷物を、荷室へ置いただけで走っていませんか。",
       "text": "買い物やレジャーの荷物を、荷室へ置いただけで走っていませんか。\n\n急ブレーキや衝突時には、ペットボトルや工具箱でも前方へ飛び出すことがあります。重い物ほど低い位置へ置き、動かないよう固定するのが基本です。\n\n後席へ荷物を置く場合も、座席の上へ放置せずシートベルトや固定具を使いたいところです。",
       "metrics": {
-        "views": 63,
+        "views": 64,
         "likes": 1,
         "replies": 0,
         "reposts": 0,
@@ -999,7 +999,7 @@
       "title": "タイヤの側面に、コブのような膨らみを見つけたら要注意です。",
       "text": "タイヤの側面に、コブのような膨らみを見つけたら要注意です。\n\n縁石や穴への強い衝撃で内部が損傷し、空気圧によって外側へ膨らんでいる可能性があります。表面に穴がなくても、内部まで正常とは限りません。\n\n空気を足して様子を見る症状ではなく、走行を控えて販売店やロードサービスへ相談します。",
       "metrics": {
-        "views": 695,
+        "views": 697,
         "likes": 0,
         "replies": 1,
         "reposts": 0,
