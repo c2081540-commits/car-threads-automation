@@ -36,25 +36,26 @@ def aggregate(posts, field):
 def main():
     document = json.loads(SOURCE.read_text(encoding="utf-8"))
     posts = document["posts"]
+    available = [post for post in posts if isinstance(post["metrics"].get("views"), (int, float))]
     now = datetime.now(timezone.utc)
-    for post in posts:
+    for post in available:
         raw = post.get("published_at") or post.get("scheduled_at")
         try:
             post["age_hours"] = (now - datetime.fromisoformat(raw.replace("Z", "+00:00"))).total_seconds() / 3600
         except (TypeError, ValueError):
             post["age_hours"] = 0
-    mature = [post for post in posts if post["age_hours"] >= 24]
-    ranked = sorted(mature or posts, key=lambda post: number(post["metrics"].get("views")), reverse=True)
+    mature = [post for post in available if post["age_hours"] >= 24]
+    ranked = sorted(mature or available, key=lambda post: number(post["metrics"].get("views")), reverse=True)
     efficient = sorted((post for post in mature if number(post["metrics"].get("views")) >= 10), key=rate, reverse=True)
     media_groups = defaultdict(list)
-    for post in mature or posts:
+    for post in mature or available:
         label = "画像あり" if post.get("media_type") in {"IMAGE", "CAROUSEL_ALBUM"} else "テキスト"
         media_groups[label].append(post)
 
     lines = [
         "# Threadsインサイト分析（最新）",
         "",
-        f"取得日時: {document['collected_at']} / 対象: {len(posts)}投稿 / 24時間以上経過: {len(mature)}投稿",
+        f"取得日時: {document['collected_at']} / 公開ログ: {len(posts)}投稿 / 指標取得成功: {len(available)}投稿 / 24時間以上経過: {len(mature)}投稿",
         "",
         "> 数値は取得時点の累計です。投稿時期が違うため、閲覧数だけの順位は古い投稿ほど有利です。反応率は（いいね＋返信＋再投稿＋引用＋シェア）÷閲覧数で算出しています。",
         "",
@@ -82,9 +83,10 @@ def main():
         avg_rate = sum(rate(x) for x in items) / len(items)
         lines.append(f"|{name}|{len(items)}|{avg_views:,.1f}|{avg_rate:.2f}%|")
 
-    unavailable = sorted({metric for post in posts for metric, error in post.get("metric_errors", {}).items() if error})
-    if unavailable:
-        lines += ["", f"未取得指標: {', '.join(unavailable)}（APIまたは権限で利用できない指標は集計上0として扱っています）"]
+    unavailable_posts = [post for post in posts if post not in available]
+    if unavailable_posts:
+        labels = ", ".join(post["post_no"] for post in unavailable_posts)
+        lines += ["", f"取得不能で集計から除外: {labels}（{len(unavailable_posts)}投稿）"]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
