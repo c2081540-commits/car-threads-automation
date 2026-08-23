@@ -38,7 +38,9 @@ def dispatch(slot, target_date):
     if not settings.auto_publish: return {"status": "preview_only", "post_no": item["post_no"]}
     api = ThreadsAPI(); api.verify_identity()
     image_path = item.get("image_path")
-    if image_path:
+    if item.get("format") == "poll":
+        media_id = api.publish_poll(item["body"], item["poll_options"], topic_tag=item.get("topic_tag"))
+    elif image_path:
         if not settings.image_base_url: raise RuntimeError("IMAGE_BASE_URLが未設定です")
         url = settings.image_base_url.rstrip("/") + "/" + quote(image_path)
         media_id = api.publish_image(item["body"], url, topic_tag=item.get("topic_tag"))

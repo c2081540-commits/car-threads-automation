@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 SLOTS = {"morning": "0700", "noon": "1200", "evening": "2000"}
-FORMATS = {"text", "image", "question", "comparison", "warning", "traffic"}
+FORMATS = {"text", "image", "poll", "question", "comparison", "warning", "traffic"}
 IMAGE_SIZE = (1200, 675)
 
 
@@ -39,7 +39,14 @@ def validate_queue(path="data/content_queue.json", require_images=True):
         if item["format"] not in FORMATS: errors.append(f"{label}: formatが不正")
         if len(item["body"]) > 500: errors.append(f"{label}: 本文が500文字超")
         image_path = item.get("image_path")
-        if item["format"] != "text" and not image_path: errors.append(f"{label}: 画像投稿にimage_pathがありません")
+        if item["format"] not in {"text", "poll"} and not image_path: errors.append(f"{label}: 画像投稿にimage_pathがありません")
+        poll_options = item.get("poll_options")
+        if item["format"] == "poll":
+            if not isinstance(poll_options, list) or not 2 <= len(poll_options) <= 4:
+                errors.append(f"{label}: poll_optionsは2〜4件必要です")
+            elif any(not isinstance(option, str) or not option.strip() for option in poll_options):
+                errors.append(f"{label}: poll_optionsに空欄があります")
+            if image_path: errors.append(f"{label}: アンケートと画像は併用できません")
         if image_path:
             p = Path(image_path)
             if not str(p).startswith("generated/weeks/"): errors.append(f"{label}: image_pathは週フォルダ内にしてください")

@@ -1,3 +1,5 @@
+import json
+
 from .settings import settings
 
 
@@ -81,6 +83,21 @@ class ThreadsAPI:
         payload = {"access_token": self.token, "media_type": "TEXT", "text": text}
         if reply_to_id:
             payload["reply_to_id"] = reply_to_id
+        if topic_tag:
+            payload["topic_tag"] = topic_tag
+        container = self._post(f"{self.user_id}/threads", payload)
+        self._wait_until_ready(container["id"])
+        return self._publish_container(container["id"])
+
+    def publish_poll(self, text, poll_options, topic_tag=None):
+        names = ("option_a", "option_b", "option_c", "option_d")
+        attachment = {name: value for name, value in zip(names, poll_options) if value}
+        payload = {
+            "access_token": self.token,
+            "media_type": "TEXT",
+            "text": text,
+            "poll_attachment": json.dumps(attachment, ensure_ascii=False),
+        }
         if topic_tag:
             payload["topic_tag"] = topic_tag
         container = self._post(f"{self.user_id}/threads", payload)
